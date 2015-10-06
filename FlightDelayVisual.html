@@ -18,6 +18,13 @@
         font-family: courier;
       }
 
+
+      h5 {
+	          text-align: left;
+	          color:  black;
+	          font-family: courier;
+      }
+
       div.years_buttons {
         position: fixed;
         top: 5px;
@@ -32,20 +39,24 @@
 
       line.link {
 	    fill: none;
-	    stroke-width: 1.5px;
+	    stroke-width: 1.0px;
 	  }
 
     </style>
     <script type="text/javascript">
       function draw(us) {
         "use strict";
-        var margin = 100,
+        var margin = 50,
             width = 1400 - 75,
             height = 1000 - 250;
 
         d3.select("body")
           .append("h2")
-          .text("US Top 50 Airport Flight Delay Year 2008");
+          .text("US Top 50 Airports Flight Delay Year 2008");
+
+       d3.select("body")
+          .append("h5")
+          .text("The visual presenation below display flight delay satatics for US top 50 airports by number of flights annually in 2008. Move mouse on airport to see more detail!");
 
         var svg = d3.select("body")
             .append("svg")
@@ -138,13 +149,13 @@
 		              });
 
 
-          console.log(flight_max);
+         // console.log(flight_max);
 
-		 console.log(index_max);
+		// console.log(index_max);
 
-		 console.log(index_min);
+		// console.log(index_min);
 
-		 console.log(index_med);
+		// console.log(index_med);
 
 		 var radius = d3.scale.sqrt()
 		                   .domain([0, flight_max])
@@ -155,9 +166,152 @@
                            .range(["green", "yellow", "red"]);
 
 
+         var legend_number = d3.scale.linear()
+		                   .domain([index_min, index_max])
+                           .range([1, 10]);
 
 
 
+        //draw lengends:
+
+        var lcx = width - 250;
+        var lcy = height - 400;
+
+        svg.append("text")
+				    .text("Number of Flights Annually")
+					            .attr("class","nodetext")
+					            .attr('x', lcx - 10  )
+					            .attr('y', lcy - 15 )
+					            .style("font-size","10px")
+					            .style("font-family", "sans-serif")
+					            .style("fill", "black")
+		            .attr("text-anchor", "left");
+
+
+
+
+
+        svg.append("circle")
+           .attr("class", "bubble")
+           .attr('cx', lcx )
+		   .attr('cy', lcy)
+		   .attr('r', function() {return radius(50000) })
+		   .style('fill', "white");
+
+
+		svg.append("text")
+		    .text("50,000")
+			            .attr("class","nodetext")
+			            .attr('x', lcx  + 15)
+			            .attr('y', lcy + 2 )
+			            .style("font-size","10px")
+			            .style("font-family", "sans-serif")
+			            .style("fill", "black")
+            .attr("text-anchor", "left");
+
+	    svg.append("circle")
+           .attr("class", "bubble")
+           .attr('cx', lcx )
+		   .attr('cy', lcy + 20)
+		   .attr('r', function() {return radius(100000) })
+		   .style('fill', "white");
+
+		   svg.append("text")
+		   .text("100,000")
+		   .attr("class","nodetext")
+		   			            .attr('x', lcx + 15)
+		   			            .attr('y', lcy + 20 + 2)
+		   			            .style("font-size","10px")
+		   			            .style("font-family", "sans-serif")
+		   			            .style("fill", "black")
+            .attr("text-anchor", "left");
+
+
+         svg.append("circle")
+           .attr("class", "bubble")
+           .attr('cx', lcx )
+		   .attr('cy', lcy + 50)
+		   .attr('r', function() {return radius(500000) })
+		   .style('fill', "white");
+
+		   svg.append("text")
+		   .text("500,000")
+		   .attr("class","nodetext")
+		   			            .attr('x', lcx + 15)
+		   			            .attr('y', lcy + 50 + 2)
+		   			            .style("font-size","10px")
+		   			            .style("font-family", "sans-serif")
+		   			            .style("fill", "black")
+            .attr("text-anchor", "left");
+
+
+       svg.append("text")
+	  				    .text("Flight Delay Index")
+	  					            .attr("class","nodetext")
+	  					            .attr('x', lcx -10 )
+	  					            .attr('y', lcy + 85 )
+	  					            .style("font-size","10px")
+	  					            .style("font-family", "sans-serif")
+	  					            .style("fill", "black")
+		            .attr("text-anchor", "left");
+
+
+
+
+
+		 svg.append("rect")
+		            .attr('x', lcx )
+		 		   .attr('y', lcy + 100)
+		 		   .attr("width", 8)
+		            .attr("height", 5)
+		 		   .style('fill', "green");
+
+		       svg.append("text")
+		 	 	 .text("1(Very unlikely to delay)")
+		 	 	 .attr("class","nodetext")
+		 	 	 .attr('x', lcx + 15  )
+		 	 	 .attr('y', lcy + 105  )
+		 	 	 .style("font-size","10px")
+		          .style("font-family", "sans-serif")
+		 	 	 .style("fill", "black")
+		         .attr("text-anchor", "left");
+
+
+		          svg.append("rect")
+				 		            .attr('x', lcx )
+				 		 		   .attr('y', lcy + 115)
+				 		 		   .attr("width", 8)
+				 		            .attr("height", 5)
+				 		 		   .style('fill', "yellow");
+
+				 		       svg.append("text")
+				 		 	 	 .text("1(Somewhat likely to delay)")
+				 		 	 	 .attr("class","nodetext")
+				 		 	 	 .attr('x', lcx + 15  )
+				 		 	 	 .attr('y', lcy + 120 )
+				 		 	 	 .style("font-size","10px")
+				 		          .style("font-family", "sans-serif")
+				 		 	 	 .style("fill", "black")
+		         .attr("text-anchor", "left");
+
+
+
+		                            svg.append("rect")
+				 		            .attr('x', lcx )
+				 		 		   .attr('y', lcy + 130)
+				 		 		   .attr("width", 8)
+				 		            .attr("height", 5)
+				 		 		   .style('fill', "red");
+
+				 		       svg.append("text")
+				 		 	 	 .text("10(Very likely to delay)")
+				 		 	 	 .attr("class","nodetext")
+				 		 	 	 .attr('x', lcx + 15  )
+				 		 	 	 .attr('y', lcy + 135 )
+				 		 	 	 .style("font-size","10px")
+				 		          .style("font-family", "sans-serif")
+				 		 	 	 .style("fill", "black")
+		                         .attr("text-anchor", "left");
 
 
           /*
@@ -185,17 +339,17 @@
 			  }
 
 
-
+         var textY = 175;
 
 
           function showRoutes(ap){
 
              var airport_code = ap['iata'];
 		   	 var year = ap['year'];
-				                console.log('Draw routes for ' + airport_code + ' in year ' + year );
+				               // console.log('Draw routes for ' + airport_code + ' in year ' + year );
 
 
-
+             console.log("cy: " + ap['cy']);
 
 		      // var this_port =  d3.select(this);
 
@@ -217,7 +371,7 @@
 
 			function plot_routes(routes){
 
-             console.log(routes.length) ;
+            // console.log(routes.length) ;
 
 				              function get_route_delay_index(d){
 
@@ -252,21 +406,21 @@
 						 		                  return get_route_delay_index(d);
 						 		              });
 
-						 console.log("max route delay index: " + route_index_max )
+						// console.log("max route delay index: " + route_index_max )
 
-						 console.log("min route delay index: " + route_index_min )
+						// console.log("min route delay index: " + route_index_min )
 
 						 var route_flight_max = d3.max(filtered_routes, function(d) {
 						                  return Number(d['total_flights_per_route']);
 						              });
 
-                           console.log("Max flight number: " + route_flight_max);
+                         //  console.log("Max flight number: " + route_flight_max);
 
 						  var route_index_mean = d3.mean(filtered_routes, function(d) {
 						 		                  return get_route_delay_index(d);
 						 		              });
 
-						console.log("mean route delay index: " + route_index_mean );
+						//console.log("mean route delay index: " + route_index_mean );
 
 
 
@@ -297,16 +451,16 @@
 										     return get_coords2(d, 2)[1];
 										   })
 										   .attr("stroke", function(d){return line_color(get_route_delay_index(d));})
-										   .attr("stroke-width", function(d){ return line_width(d['total_flights_per_route']); })
+										  // .attr("stroke-width", function(d){ return line_width(d['total_flights_per_route']); })
 										   .attr("stroke-opacity", 0.8);
 
 
 
 
 					 svg.append("text").attr({
-               id: "t" + ap.cx + "-" + ap.cy + " - " + 1,
+               id: "t" + ap['iata'] ,
                 x: function() { return ap.cx - 30; },
-                y: function() { return ap.cy - 80; }
+                y: function() { return textY - 132; }
             })
             .text(function() {
                          return ap['iata'];
@@ -320,59 +474,59 @@
 
 
             svg.append("text").attr({
-			               id: "t" + ap.cx + "-" + ap.cy + " - " + 1,
+			               id: "t" + ap['iata'],
 			                x: function() { return ap.cx - 30; },
-			                y: function() { return ap.cy - 70; }
+			                y: function() { return textY - 120; }
 			            })
 			            .text(function() {
 			                         return "Arrival Delay Ratio:    " + formatPercent(ap['arr_delay_10_ratio']);
 			                         })
 			            .attr("class","nodetext")
-			            .style("font-size","10px")
+			            .style("font-size","12px")
 			            .style("font-family", "sans-serif")
 			            .style("fill", "gray")
             .attr("text-anchor", "left");
 
 
             svg.append("text").attr({
-						               id: "t" + ap.cx + "-" + ap.cy + " - " + 1,
+						               id: "t" + ap['iata'],
 						                x: function() { return ap.cx - 30; },
-						                y: function() { return ap.cy - 60; }
+						                y: function() { return textY - 108; }
 						            })
 						            .text(function() {
 						                         return "Departure Delay Ratio:  " + formatPercent(ap['dep_delay_10_ratio']);
 						                         })
 						            .attr("class","nodetext")
-						            .style("font-size","10px")
+						            .style("font-size","12px")
 						            .style("font-family", "sans-serif")
 						            .style("fill", "gray")
             .attr("text-anchor", "left");
 
              svg.append("text").attr({
-									               id: "t" + ap.cx + "-" + ap.cy + " - " + 1,
+									               id: "t" + ap['iata'] ,
 									                x: function() { return ap.cx - 30; },
-									                y: function() { return ap.cy - 50; }
+									                y: function() { return textY - 96; }
 									            })
 									            .text(function() {
 									                         return "Avg. Arrival Delay:     " + formatInt(ap['avg_arr_delay']) + " mins";
 									                         })
 									            .attr("class","nodetext")
-									            .style("font-size","10px")
+									            .style("font-size","12px")
 									            .style("font-family", "sans-serif")
 									            .style("fill", "gray")
             .attr("text-anchor", "left");
 
 
              svg.append("text").attr({
-												               id: "t" + ap.cx + "-" + ap.cy + " - " + 1,
+												               id: "t" + ap['iata'] ,
 												                x: function() { return ap.cx - 30; },
-												                y: function() { return ap.cy - 40; }
+												                y: function() { return textY - 84; }
 												            })
 												            .text(function() {
 												                         return "Avg. Departure Delay:   " + formatInt(ap['avg_dep_delay']) + " mins" ;
 												                         })
 												            .attr("class","nodetext")
-												            .style("font-size","10px")
+												            .style("font-size","12px")
 												            .style("font-family", "sans-serif")
 												            .style("fill", "gray")
             .attr("text-anchor", "left");
@@ -385,7 +539,7 @@
           }
 
 
-		   console.log("data/route_delay_info_" + year + ".csv");
+		  // console.log("data/route_delay_info_" + year + ".csv");
 
            d3.csv("data/route_delay_info_2008.csv", plot_routes);
 
@@ -395,7 +549,10 @@
 
            function hideRoutes(ap){
 
-            svg.selectAll("text").remove();
+            var airpotText = svg.selectAll("text")
+            .filter(function(d, i){ return this.id == "t" +ap['iata']; });
+
+            airpotText.remove();
 
             var empty_array =[];
 
