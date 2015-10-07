@@ -56,7 +56,7 @@
 
        d3.select("body")
           .append("h5")
-          .text("The visual presenation below display flight delay satatics for US top 50 airports by number of flights annually in 2008. Move mouse on airport to see more detail!");
+          .text("The visual presenation below display flight delay satatics for US top 50 airports(by number of flights annually) in 2008. You can move mouse on a airport to see more detail about the airport! Delay index for each airport and flight rout is calculated by formular including factor nubmer of fligh delayed and delayed time and normalized to 1 to 10. 1 is the best and 10 is the worst");
 
         var svg = d3.select("body")
             .append("svg")
@@ -285,7 +285,7 @@
 				 		 		   .style('fill', "yellow");
 
 				 		       svg.append("text")
-				 		 	 	 .text("1(Somewhat likely to delay)")
+				 		 	 	 .text("6(Somewhat likely to delay)")
 				 		 	 	 .attr("class","nodetext")
 				 		 	 	 .attr('x', lcx + 15  )
 				 		 	 	 .attr('y', lcy + 120 )
@@ -358,11 +358,6 @@
 
 
 
-          /*  + "\nFlight Total:           " + formatNumber(total(ap))
-		                            + "\nArrival Delay Ratio:    " + formatPercent(ap['arr_delay_10_ratio'])
-		                            + "\nDeparture Delay Ratio:  " + formatPercent(ap['dep_delay_10_ratio'])
-		                            + "\nAvg. Arrival Delay:     " + formatInt(ap['avg_arr_delay']) + " mins"
-                         + "\nAvg. Departure Delay:   " + formatInt(ap['avg_dep_delay']) + " mins"  */
 
 
 
@@ -479,7 +474,7 @@
 			                y: function() { return textY - 120; }
 			            })
 			            .text(function() {
-			                         return "Arrival Delay Ratio:    " + formatPercent(ap['arr_delay_10_ratio']);
+			                         return "Arrival Delay Percentage:    " + formatPercent(ap['arr_delay_10_ratio']);
 			                         })
 			            .attr("class","nodetext")
 			            .style("font-size","12px")
@@ -494,7 +489,7 @@
 						                y: function() { return textY - 108; }
 						            })
 						            .text(function() {
-						                         return "Departure Delay Ratio:  " + formatPercent(ap['dep_delay_10_ratio']);
+						                         return "Departure Delay Percentage:  " + formatPercent(ap['dep_delay_10_ratio']);
 						                         })
 						            .attr("class","nodetext")
 						            .style("font-size","12px")
@@ -588,15 +583,14 @@
 		                     return radius(total(d)) ;            })
 		                 .style('fill', function(d){
 
-		                    // console.log(color(d['delay_index']) );
 		                     return color(d['delay_index']);});
 
 		            /* circles.append("title")
                          .text(function(d) {
                          return d['iata']
                          + "\nFlight Total:           " + formatNumber(total(d))
-                         + "\nArrival Delay Ratio:    " + formatPercent(d['arr_delay_10_ratio'])
-                         + "\nDeparture Delay Ratio:  " + formatPercent(d['dep_delay_10_ratio'])
+                         + "\nArrival Delay Percentage:    " + formatPercent(d['arr_delay_10_ratio'])
+                         + "\nDeparture Delay Percentage:  " + formatPercent(d['dep_delay_10_ratio'])
                          + "\nAvg. Arrival Delay:     " + formatInt(d['avg_arr_delay']) + " mins"
                          + "\nAvg. Departure Delay:   " + formatInt(d['avg_dep_delay']) + " mins" ;}); */
 
