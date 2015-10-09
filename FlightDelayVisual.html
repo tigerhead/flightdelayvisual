@@ -56,7 +56,7 @@
 
        d3.select("body")
           .append("h5")
-          .text("The visual presenation below display flight delay satatics for US top 50 airports(by number of flights annually) in 2008. You can move mouse on a airport to see more detail about the airport! Delay index for each airport and flight rout is calculated by formular including factor nubmer of fligh delayed and delayed time and normalized to 1 to 10. 1 is the best and 10 is the worst");
+          .text("This visual presentation displays flight delay statics for US top 50 airports(by number of flights annually) in 2008. You can move mouse on a airport to flight delay detail about each airport and flight routes connecting to it.  Delay index for each airport and flight route is calculated by a formula including following factors: 1)Number of flight delayed, 2)Arrival delay or departure delay, 3)Delayed time. The index was normalized to 1 to 10. 1 is the best and 10 is the worst.");
 
         var svg = d3.select("body")
             .append("svg")
