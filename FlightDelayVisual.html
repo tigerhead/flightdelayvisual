@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <style>
+      circle {
+        fill: orange;
+        stroke: black;
+        stroke-width: 0.7;
+        opacity: 0.7;
+      }
+
+      h2 {
+        text-align: center;
+        color:  black;
+        font-family: courier;
+      }
+
+
+      h5 {
+	          text-align: left;
+	          color:  black;
+	          font-family: courier;
+      }
+
+      div.years_buttons {
+        position: fixed;
+        top: 5px;
+        left: 50px;
+      }
+
+      div.years_buttons div {
+        background-color: rgb(251, 201, 127);
+        padding: 3px;
+        margin: 7px;
+      }
+
+      line.link {
+	    fill: none;
+	    stroke-width: 1.0px;
+	  }
+
+    </style>
+    <script type="text/javascript">
+      function draw(us) {
+        "use strict";
+        var margin = 50,
+            width = 1400 - 75,
+            height = 1000 - 250;
+
+        d3.select("body")
+          .append("h2")
+          .text("US Top 50 Airports Flight Delay Year 2008");
+
+       d3.select("body")
+          .append("h5")
+          .text("The visual presenation below display flight delay satatics for US top 50 airports(by number of flights annually) in 2008. You can move mouse on a airport to see more detail about the airport! Delay index for each airport and flight rout is calculated by formular including factor nubmer of fligh delayed and delayed time and normalized to 1 to 10. 1 is the best and 10 is the worst");
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width + margin)
+            .attr("height", height + margin)
+            .append('g')
+            .attr('class', 'map');
+
+         var years = [];
+
+          for(var i = 1999; i < 2008; i ++) {
+
+              years.push(i);
+          }
+
+        var projection = d3.geo.albersUsa()
+              .scale(1250)
+              .translate([width / 2, height / 2]);
+
+        var formatNumber = d3.format(",.0f");
+        var formatInt = d3.format(".0f");
+        var formatPercent = d3.format(",.2%");
+
+        var path = d3.geo.path().projection(projection);
+
+        var states = topojson.feature(us, us.objects.units);
+
+        var map = svg.selectAll('path')
+                     .data(states.features)
+                     .enter()
+                     .append('path')
+                     .attr('d', path)
+                     .style('fill', 'lightBlue')
+                     .style('stroke', 'black')
+                     .style('stroke-width', 0.5);
+
+       function componentToHex(c) {
+	       var hex = c.toString(16);
+	       return hex.length == 1 ? "0" + hex : hex;
+	   }
+
+	   function rgbToHex(r, g, b) {
+	       return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+	   }
+
+
+	   function findAirpot(airport_code){
+	       for(var airport in  all_airports) {
+		      if(airport['iata'] == airport_code)
+		         return airport;
+           }
+
+	   }
+
+
+
+
+
+
+       /*
+	       plot airport on map
+       */
+       function plot_airports(airports) {
+
+
+          function total(d){
+
+            return Number(d['total_dep_count']) + Number(d['total_arr_count']);
+          }
+
+
+
+
+
+          var index_max = d3.max(airports, function(d) {
+		                  return Number(d['delay_index']);
+		              });
+
+		   var index_min = d3.min(airports, function(d) {
+		                  return Number(d['delay_index']);
+		              });
+
+
+		   var flight_max = d3.max(airports, function(d) {
+		                  return total(d);
+		              });
+
+		   var index_med = d3.mean(airports, function(d) {
+		                  return Number(d['delay_index']);
+		              });
+
+
+         // console.log(flight_max);
+
+		// console.log(index_max);
+
+		// console.log(index_min);
+
+		// console.log(index_med);
+
+		 var radius = d3.scale.sqrt()
+		                   .domain([0, flight_max])
+                           .range([0, 15]);
+
+         var color = d3.scale.linear()
+		                   .domain([index_min, index_med, index_max])
+                           .range(["green", "yellow", "red"]);
+
+
+         var legend_number = d3.scale.linear()
+		                   .domain([index_min, index_max])
+                           .range([1, 10]);
+
+
+
+        //draw lengends:
+
+        var lcx = width - 250;
+        var lcy = height - 400;
+
+        svg.append("text")
+				    .text("Number of Flights Annually")
+					            .attr("class","nodetext")
+					            .attr('x', lcx - 10  )
+					            .attr('y', lcy - 15 )
+					            .style("font-size","10px")
+					            .style("font-family", "sans-serif")
+					            .style("fill", "black")
+		            .attr("text-anchor", "left");
+
+
+
+
+
+        svg.append("circle")
+           .attr("class", "bubble")
+           .attr('cx', lcx )
+		   .attr('cy', lcy)
+		   .attr('r', function() {return radius(50000) })
+		   .style('fill', "white");
+
+
+		svg.append("text")
+		    .text("50,000")
+			            .attr("class","nodetext")
+			            .attr('x', lcx  + 15)
+			            .attr('y', lcy + 2 )
+			            .style("font-size","10px")
+			            .style("font-family", "sans-serif")
+			            .style("fill", "black")
+            .attr("text-anchor", "left");
+
+	    svg.append("circle")
+           .attr("class", "bubble")
+           .attr('cx', lcx )
+		   .attr('cy', lcy + 20)
+		   .attr('r', function() {return radius(100000) })
+		   .style('fill', "white");
+
+		   svg.append("text")
+		   .text("100,000")
+		   .attr("class","nodetext")
+		   			            .attr('x', lcx + 15)
+		   			            .attr('y', lcy + 20 + 2)
+		   			            .style("font-size","10px")
+		   			            .style("font-family", "sans-serif")
+		   			            .style("fill", "black")
+            .attr("text-anchor", "left");
+
+
+         svg.append("circle")
+           .attr("class", "bubble")
+           .attr('cx', lcx )
+		   .attr('cy', lcy + 50)
+		   .attr('r', function() {return radius(500000) })
+		   .style('fill', "white");
+
+		   svg.append("text")
+		   .text("500,000")
+		   .attr("class","nodetext")
+		   			            .attr('x', lcx + 15)
+		   			            .attr('y', lcy + 50 + 2)
+		   			            .style("font-size","10px")
+		   			            .style("font-family", "sans-serif")
+		   			            .style("fill", "black")
+            .attr("text-anchor", "left");
+
+
+       svg.append("text")
+	  				    .text("Flight Delay Index")
+	  					            .attr("class","nodetext")
+	  					            .attr('x', lcx -10 )
+	  					            .attr('y', lcy + 85 )
+	  					            .style("font-size","10px")
+	  					            .style("font-family", "sans-serif")
+	  					            .style("fill", "black")
+		            .attr("text-anchor", "left");
+
+
+
+
+
+		 svg.append("rect")
+		            .attr('x', lcx )
+		 		   .attr('y', lcy + 100)
+		 		   .attr("width", 8)
+		            .attr("height", 5)
+		 		   .style('fill', "green");
+
+		       svg.append("text")
+		 	 	 .text("1(Very unlikely to delay)")
+		 	 	 .attr("class","nodetext")
+		 	 	 .attr('x', lcx + 15  )
+		 	 	 .attr('y', lcy + 105  )
+		 	 	 .style("font-size","10px")
+		          .style("font-family", "sans-serif")
+		 	 	 .style("fill", "black")
+		         .attr("text-anchor", "left");
+
+
+		          svg.append("rect")
+				 		            .attr('x', lcx )
+				 		 		   .attr('y', lcy + 115)
+				 		 		   .attr("width", 8)
+				 		            .attr("height", 5)
+				 		 		   .style('fill', "yellow");
+
+				 		       svg.append("text")
+				 		 	 	 .text("6(Somewhat likely to delay)")
+				 		 	 	 .attr("class","nodetext")
+				 		 	 	 .attr('x', lcx + 15  )
+				 		 	 	 .attr('y', lcy + 120 )
+				 		 	 	 .style("font-size","10px")
+				 		          .style("font-family", "sans-serif")
+				 		 	 	 .style("fill", "black")
+		         .attr("text-anchor", "left");
+
+
+
+		                            svg.append("rect")
+				 		            .attr('x', lcx )
+				 		 		   .attr('y', lcy + 130)
+				 		 		   .attr("width", 8)
+				 		            .attr("height", 5)
+				 		 		   .style('fill', "red");
+
+				 		       svg.append("text")
+				 		 	 	 .text("10(Very likely to delay)")
+				 		 	 	 .attr("class","nodetext")
+				 		 	 	 .attr('x', lcx + 15  )
+				 		 	 	 .attr('y', lcy + 135 )
+				 		 	 	 .style("font-size","10px")
+				 		          .style("font-family", "sans-serif")
+				 		 	 	 .style("fill", "black")
+		                         .attr("text-anchor", "left");
+
+
+          /*
+		  	      Convert latitue and longtitue to coordinates(x, y)
+           */
+
+          function get_coords(d){
+              return projection([d['long'], d['lat']]);
+          }
+
+          function get_number(d){
+		          var a = d;
+		          a = a.replace(/\,/g,'');
+		          return Number(a);
+          }
+
+
+
+
+          function route_key(d){
+		 			  // console.log(d['Origin'] + d['Dest'] + d['year']);
+		 			   return d['Origin'] + d['Dest'] + d['year'];
+
+
+			  }
+
+
+         var textY = 175;
+
+
+          function showRoutes(ap){
+
+             var airport_code = ap['iata'];
+		   	 var year = ap['year'];
+				               // console.log('Draw routes for ' + airport_code + ' in year ' + year );
+
+
+             console.log("cy: " + ap['cy']);
+
+		      // var this_port =  d3.select(this);
+
+
+
+
+
+
+
+
+
+
+
+
+			function plot_routes(routes){
+
+            // console.log(routes.length) ;
+
+				              function get_route_delay_index(d){
+
+							  		  	    return (Number(d['arr_delay_count']) *3 +  Number(d['arr_delay_10_count']) * 4 + Number(d['dep_delay_count']) + Number(d['dep_delay_10_count']) * 2) / Number(d['total_flights_per_route'])
+
+					               }
+
+
+					          function get_coords2(d, sp){
+                                  if(sp == 1)
+                                     return projection([d['o_long'], d['o_lat']]);
+                                  if(sp == 2)
+                                     return projection([d['d_long'], d['d_lat']]);
+                                 }
+
+
+
+
+
+				              var filtered_routes = routes.filter(function(d) {
+							  			  			          return d['Origin'] == airport_code;
+							                });
+
+							                console.log(filtered_routes.length) ;
+
+
+							   var route_index_max = d3.max(filtered_routes, function(d) {
+						 		                  return get_route_delay_index(d);
+						 		              });
+
+					       var route_index_min = d3.min(filtered_routes, function(d) {
+						 		                  return get_route_delay_index(d);
+						 		              });
+
+						// console.log("max route delay index: " + route_index_max )
+
+						// console.log("min route delay index: " + route_index_min )
+
+						 var route_flight_max = d3.max(filtered_routes, function(d) {
+						                  return Number(d['total_flights_per_route']);
+						              });
+
+                         //  console.log("Max flight number: " + route_flight_max);
+
+						  var route_index_mean = d3.mean(filtered_routes, function(d) {
+						 		                  return get_route_delay_index(d);
+						 		              });
+
+						//console.log("mean route delay index: " + route_index_mean );
+
+
+
+							var line_color = d3.scale.linear()
+						                   .domain([route_index_min, route_index_mean, route_index_max])
+				                           .range(["green", "yellow", "red"]);
+
+
+				            var line_width = d3.scale.sqrt()
+						                   .domain([0, route_flight_max])
+				                           .range([0, 4.0]);
+
+
+							 var lines =   svg.selectAll("line")
+							               .data(filtered_routes, route_key  )
+							               .enter().append("line")
+										   .attr("class", "line.link")
+										   .attr("x1", function(d){// console.log(d['o_long']);
+										     return get_coords2(d, 1)[0];
+										   })
+										   .attr("y1", function(d){ //console.log(d['o_lat']);
+										     return get_coords2(d, 1)[1];
+										   })
+										   .attr("x2", function(d){ //console.log(d['d_long']);
+										     return get_coords2(d, 2)[0];
+										   })
+										   .attr("y2", function(d){ //console.log(d['d_lat']);
+										     return get_coords2(d, 2)[1];
+										   })
+										   .attr("stroke", function(d){return line_color(get_route_delay_index(d));})
+										  // .attr("stroke-width", function(d){ return line_width(d['total_flights_per_route']); })
+										   .attr("stroke-opacity", 0.8);
+
+
+
+
+					 svg.append("text").attr({
+               id: "t" + ap['iata'] ,
+                x: function() { return ap.cx - 30; },
+                y: function() { return textY - 132; }
+            })
+            .text(function() {
+                         return ap['iata'];
+                         })
+            .attr("class","nodetext")
+            .style("font-size","10px")
+            .style("font-family", "sans-serif")
+            .style("fill", "gray")
+            .attr("text-anchor", "left");
+
+
+
+            svg.append("text").attr({
+			               id: "t" + ap['iata'],
+			                x: function() { return ap.cx - 30; },
+			                y: function() { return textY - 120; }
+			            })
+			            .text(function() {
+			                         return "Arrival Delay Percentage:    " + formatPercent(ap['arr_delay_10_ratio']);
+			                         })
+			            .attr("class","nodetext")
+			            .style("font-size","12px")
+			            .style("font-family", "sans-serif")
+			            .style("fill", "gray")
+            .attr("text-anchor", "left");
+
+
+            svg.append("text").attr({
+						               id: "t" + ap['iata'],
+						                x: function() { return ap.cx - 30; },
+						                y: function() { return textY - 108; }
+						            })
+						            .text(function() {
+						                         return "Departure Delay Percentage:  " + formatPercent(ap['dep_delay_10_ratio']);
+						                         })
+						            .attr("class","nodetext")
+						            .style("font-size","12px")
+						            .style("font-family", "sans-serif")
+						            .style("fill", "gray")
+            .attr("text-anchor", "left");
+
+             svg.append("text").attr({
+									               id: "t" + ap['iata'] ,
+									                x: function() { return ap.cx - 30; },
+									                y: function() { return textY - 96; }
+									            })
+									            .text(function() {
+									                         return "Avg. Arrival Delay:     " + formatInt(ap['avg_arr_delay']) + " mins";
+									                         })
+									            .attr("class","nodetext")
+									            .style("font-size","12px")
+									            .style("font-family", "sans-serif")
+									            .style("fill", "gray")
+            .attr("text-anchor", "left");
+
+
+             svg.append("text").attr({
+												               id: "t" + ap['iata'] ,
+												                x: function() { return ap.cx - 30; },
+												                y: function() { return textY - 84; }
+												            })
+												            .text(function() {
+												                         return "Avg. Departure Delay:   " + formatInt(ap['avg_dep_delay']) + " mins" ;
+												                         })
+												            .attr("class","nodetext")
+												            .style("font-size","12px")
+												            .style("font-family", "sans-serif")
+												            .style("fill", "gray")
+            .attr("text-anchor", "left");
+
+
+
+
+
+
+          }
+
+
+		  // console.log("data/route_delay_info_" + year + ".csv");
+
+           d3.csv("data/route_delay_info_2008.csv", plot_routes);
+
+
+          }
+
+
+           function hideRoutes(ap){
+
+            var airpotText = svg.selectAll("text")
+            .filter(function(d, i){ return this.id == "t" +ap['iata']; });
+
+            airpotText.remove();
+
+            var empty_array =[];
+
+              var lines = svg.selectAll("line")
+						  .data(empty_array, route_key  );
+
+
+
+			             // debugger;
+
+              lines.exit().remove();
+          }
+
+
+
+
+
+
+
+
+                       var svgContainer =  svg.append('g')
+		                 .attr("class", "bubble")
+
+		               var circles =  svgContainer.selectAll("circle")
+		                 .data(airports.sort(function(a, b){return d3.descending(total(a), total(b));}))
+		                 .enter()
+		                 .append("circle")
+		                 .attr('cx', function(d) {/*console.log(d['long']); console.log(d['lat']); console.log(d['iata']); console.log(get_coords(d));*/
+		                             d['cx'] =  get_coords(d)[0];           return get_coords(d)[0]; })
+		                 .attr('cy', function(d) {d['cy'] =  get_coords(d)[1];  return get_coords(d)[1]; })
+		                 .attr('r', function(d) {
+
+		                     return radius(total(d)) ;            })
+		                 .style('fill', function(d){
+
+		                     return color(d['delay_index']);});
+
+		            /* circles.append("title")
+                         .text(function(d) {
+                         return d['iata']
+                         + "\nFlight Total:           " + formatNumber(total(d))
+                         + "\nArrival Delay Percentage:    " + formatPercent(d['arr_delay_10_ratio'])
+                         + "\nDeparture Delay Percentage:  " + formatPercent(d['dep_delay_10_ratio'])
+                         + "\nAvg. Arrival Delay:     " + formatInt(d['avg_arr_delay']) + " mins"
+                         + "\nAvg. Departure Delay:   " + formatInt(d['avg_dep_delay']) + " mins" ;}); */
+
+                      circles.on("mouseover", showRoutes)
+                        .on("mouseout", hideRoutes);
+
+       }
+
+       d3.csv("data/top50airprots_delay_info_2008.csv", plot_airports);
+
+
+    };
+    </script>
+  </head>
+<body>
+  <script type="text/javascript">
+  /*
+    Use D3 to load the TopJSON file
+    */
+
+d3.json("topojson/USA.json", draw);
+  </script>
+</body>
+</html>
