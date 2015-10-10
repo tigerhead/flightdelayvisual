@@ -19,15 +19,26 @@ http://tigerhead.github.io/flightdelayvisual/FlightDelayVisual_V3.html
 
 ## References:
 http://bost.ocks.org/mike/map/
+
 http://bost.ocks.org/mike/bubble-map/
+
 https://github.com/mbostock/d3/wiki/Selections
+
 https://www.dashingd3js.com/svg-basic-shapes-and-d3js
+
 http://christophergandrud.github.io/d3Network/
+
 http://bl.ocks.org/WilliamQLiu/76ae20060e19bf42d774
+
 https://github.com/mbostock/d3/wiki/API-Reference
+
 http://stackoverflow.com/questions/16421298/add-a-circle-to-a-d3-js-map
+
 http://stackoverflow.com/questions/19993809/d3-js-plot-point-on-map
+
 http://www.jeromecukier.net/blog/2011/08/11/d3-scales-and-color/
+
 https://github.com/mbostock/d3/wiki/Ordinal-Scales
+
 http://synthesis.sbecker.net/articles/2012/07/16/learning-d3-part-6-scales-colors
 
