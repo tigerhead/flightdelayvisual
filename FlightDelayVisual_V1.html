@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <style>
+      circle {
+        fill: orange;
+        stroke: black;
+        stroke-width: 0.7;
+        opacity: 0.7;
+      }
+
+      h2 {
+        text-align: center;
+        color: black;
+      }
+
+      div.years_buttons {
+        position: fixed;
+        top: 5px;
+        left: 50px;
+      }
+
+      div.years_buttons div {
+        background-color: rgb(251, 201, 127);
+        padding: 3px;
+        margin: 7px;
+      }
+    </style>
+    <script type="text/javascript">
+      function draw(us) {
+        "use strict";
+        var margin = 75,
+            width = 1400 - margin,
+            height = 1000 - margin;
+
+        d3.select("body")
+          .append("h2")
+          .text("US Top 50 Airport Flight Delay ");
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width + margin)
+            .attr("height", height + margin)
+            .append('g')
+            .attr('class', 'map');
+
+         var years = [];
+
+          for(var i = 1999; i < 2008; i ++) {
+
+              years.push(i);
+          }
+
+        var projection = d3.geo.albersUsa()
+              .scale(1500)
+              .translate([width / 2, height / 2]);
+
+        var formatNumber = d3.format(",.0f");
+        var formatInt = d3.format(".0f");
+        var formatPercent = d3.format(",.2%");
+
+        var path = d3.geo.path().projection(projection);
+
+        var states = topojson.feature(us, us.objects.units);
+
+        var map = svg.selectAll('path')
+                     .data(states.features)
+                     .enter()
+                     .append('path')
+                     .attr('d', path)
+                     .style('fill', 'lightBlue')
+                     .style('stroke', 'black')
+                     .style('stroke-width', 0.5);
+
+       function componentToHex(c) {
+	       var hex = c.toString(16);
+	       return hex.length == 1 ? "0" + hex : hex;
+	   }
+
+	   function rgbToHex(r, g, b) {
+	       return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+	   }
+
+
+
+
+       /*
+	       plot airport on map
+       */
+       function plot_airports(airports) {
+
+
+          function total(d){
+
+            return Number(d['total_dep_count']) + Number(d['total_arr_count']);
+          }
+
+
+          var index_max = d3.max(airports, function(d) {
+		                  return Number(d['delay_index']);
+		              });
+
+		   var index_min = d3.min(airports, function(d) {
+		                  return Number(d['delay_index']);
+		              });
+
+
+		   var flight_max = d3.max(airports, function(d) {
+		                  return total(d);
+		              });
+
+		   var index_mid = (index_min + index_max)/2
+
+
+          console.log(flight_max);
+
+		 console.log(index_max);
+
+		 console.log(index_min);
+
+		 console.log(index_mid);
+
+		 var radius = d3.scale.sqrt()
+		                   .domain([0, flight_max])
+                           .range([0, 15]);
+
+         var color = d3.scale.linear()
+		                   .domain([index_min, index_mid, index_max])
+                           .range(["green", "yellow", "red"]);
+
+
+         function get_color(d){
+            if( d['delay_index'] <= index_mid )
+                return color(d['delay_index']);
+		    else
+		        return color2(d['delay_index']);
+
+         }
+
+
+
+
+          /*
+		  	      Convert latitue and longtitue to coordinates(x, y)
+           */
+
+          function get_coords(d){
+              return projection([d['long'], d['lat']]);
+          }
+
+          function get_number(d){
+		          var a = d;
+		          a = a.replace(/\,/g,'');
+		          return Number(a);
+          }
+
+
+
+
+
+
+
+
+          svg.append('g')
+		                 .attr("class", "bubble")
+		                 .selectAll("circle")
+		                 .data(airports.sort(function(a, b){return d3.descending(total(a), total(b));}))
+		                 .enter()
+		                 .append("circle")
+		                 .attr('cx', function(d) {/*console.log(d['long']); console.log(d['lat']); console.log(d['iata']); console.log(get_coords(d));*/
+		                                          return get_coords(d)[0]; })
+		                 .attr('cy', function(d) { return get_coords(d)[1]; })
+		                 .attr('r', function(d) {
+
+		                     return radius(total(d)) ;            })
+		                 .style('fill', function(d){
+
+		                    // console.log(color(d['delay_index']) );
+		                     return color(d['delay_index']);})
+		                 .append("title")
+                         .text(function(d) {
+                         return d['iata']
+                         + "\nFlight Total:           " + formatNumber(total(d))
+                         + "\nArrival Delay Ratio:    " + formatPercent(d['arr_delay_10_ratio'])
+                         + "\nDeparture Delay Ratio:  " + formatPercent(d['dep_delay_10_ratio'])
+                         + "\nAvg. Arrival Delay:     " + formatInt(d['avg_arr_delay']) + " mins"
+                         + "\nAvg. Departure Delay:   " + formatInt(d['avg_dep_delay']) + " mins"
+                         ;
+      })
+
+       }
+
+       d3.csv("data/top50airprots_delay_info_2007.csv", plot_airports);
+
+
+    };
+    </script>
+  </head>
+<body>
+  <script type="text/javascript">
+  /*
+    Use D3 to load the TopJSON file
+    */
+
+d3.json("topojson/USA.json", draw);
+  </script>
+</body>
+</html>
