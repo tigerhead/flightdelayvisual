@@ -16,6 +16,9 @@ I posted this version to class forum. Teja, on the coach kindly gave me lots of 
 Based on his feedback I created the third major version, adding  brief description and legend and improved legend several times:
 http://tigerhead.github.io/flightdelayvisual/FlightDelayVisual_V3.html
 
+Got more feedback after first submission of this project to UDACITY review team: this visual is  more explorary than explanary, some story line is needed here. So I divided the US map into 4 regions: Northeast, South, MidWest and West. And I would like to tell the geographic impact to flight delay. Here is the the forth version:
+http://tigerhead.github.io/flightdelayvisual/FlightDelayVisual_V4.html
+
 
 ## References:
 http://bost.ocks.org/mike/map/
