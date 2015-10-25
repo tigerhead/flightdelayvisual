@@ -14,6 +14,37 @@ http://tigerhead.github.io/flightdelayvisual/FlightDelayVisual_V4.html
 To lead the reader to find out that airports in West region has best delay situation and Northeast does the worst easier,  animation was created to show airports in each region from West to East. And reader can select each region through a series of buttons. As bonus,  when reader move mouse on certain airport circle, fight delay statistics for the airport and departing route delay situation(displaying by the color of the route line) will pop up.  Here is version 5:
 http://tigerhead.github.io/flightdelayvisual/FlightDelayVisual_V5.html
 
+## Feedback 
+
+###I. Feedback on version 1  
+My son:
+ The map looks amazing. There were lots of dots on two coasts and very few in the middle. 
+My Wife:
+1) I don't know that Atlanta is the biggest airport in US until I saw your map.  
+2) What does the color means here?
+One of my colleague:
+1) I can see the airports distribution clearly and I can bigger circle means bigger airport.
+2) Does the color means the how good or bad the delay is in the airport?
+2) I am not sure what else I can get out of it other than distribution and airport traffic
+3) More interaction and more information about like flight route may be helpful 
+And I showed to one of my colleague, he liked overall, but he felt if the visual could have more user interaction to reveal more information like the flight route delay situation for each airport . 
+
+###II. Feedback on version 2: 
+I posted version two to class forum. Teja, one of the coach kindly gave me lots of very good feedback:
+1) Are these the top 50 airports by air traffic?
+2). Please mention if the color of each data point or arc represent a certain type of delay. A color scale would also be a useful addition. It is also unclear what the size of each data point circle represents. 
+3) The details of the data points are hidden by the arcs between airports. You also might want to rethink the text color for this. One solution could be to display the airport details outside the map
+4) Do the colors for the airports represent the same information as the flight delay index? Also, this seems to be a continuous color scale rather than just having the 3 colors displayed in the legend?
+
+###III Feedback on version 3
+From Teja
+I didn't see more feedback on the forum, so I submitted the project to see where I could improve.
+Got more feedback after first submission of this project to UDACITY review team: 
+Currently, this chart is exploratory rather than explanatory. It's exploratory because the viewer is presented with all of the data, and the viewer can explore around and try to make conclusions about the data for himself. For this chart to be explanatory, you as chart maker need to tell a story about the data. You need to find something interesting and force the viewer to see what it was that you found interesting about the chart.
+
+###IV Feedback on version 4
+From one of my friends:
+1) I can see more green dots on West side and more orange and red dot on North and East part but it took me a while to figure it out.
 
 
 ## References:
