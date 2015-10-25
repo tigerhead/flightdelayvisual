@@ -8,7 +8,7 @@ This visual provides some points:
 
 2) Nearly half of top 50 airports are located in two coast line  which is related to its geographic advantage.
 
-3) The largest airport are in land not on coat line,  4 out of TOP 5 ATL, ORD, DFW,  DEN are in land.
+3) The largest airport are inland not on coat line,  4 out of TOP 5: ATL, ORD, DFW,  DEN are inland.
 
 Additionally, reader can also explore flight delay statistics for each of those airport  and check delay situation for each flight route departing from selected airport
 
