@@ -1,7 +1,17 @@
 # Flight Delay Visual
 
+
 ##Summary
-This visual provides the distribution of top  50 US airports  in 4 Census Bureau-designated regions: West, South, Midwest and East and an insight between flight delay situation in the airports  and their geographic locations(regions).  From the visual, it is obvious that airports in Northeast region has the  worst flight delay while West region does the best and Midwest and South region are in between correlated to their geographic locations. Additionally, reader can also explore flight delay statistics for each of those airport  and check delay situation for each flight route departing from selected airport.
+This visual provides some points: 
+
+1) Airports in Northeast region has the  worst flight delay while airports in West region does the best, and le airports in Midwest and South region are in between correlated to their geographic locations. 
+
+2) Nearly half of top 50 airports are located in two coast line  which is related to its geographic advantage.
+
+3) The largest airport are in land not on coat line,  4 out of TOP 5 ATL, ORD, DFW,  DEN are in land.
+
+Additionally, reader can also explore flight delay statistics for each of those airport  and check delay situation for each flight route departing from selected airport
+
 ##Design
  I chose flight dataset from http://stat-computing.org/dataexpo/2009/the-data.html. I downloaded dataset from 1999-2008, and finally picked year 2008 as my target dataset. I would like to reveal top 50 airport geographic distribution and the geographic  location impact to flight delay.  I thought about bar chart, line chart, pie chart, those charts could show the delay data like delay percentage between different airports simple and clearly but couldn't visualize the geographic location and delay relationship effectively.  Putting airports on a US map would make user to see the distribution and  discover relation between flight delay and geographic location in a glimpse. So I finally chose to draw a US map representation. Each circle represents a airport. The size of the circle represents the traffic of the airport(annual departure and arrival flights) .  A formula was invented to calculate flight delay index for each airport and their  connecting routes including following those factors: total number of flight, total number of arrival delay, total number of departure delay, delay time. Color of each airport circle, which is based on the normalized flight delay index, represents how good or bad the delay situation for that airport.  I had my first based on this design: version:  ://tigerhead.github.io/flightdelayvisual/FlightDelayVisual_V1.html
 Based on feedback to version 1, I processed original dataset more to collect delay statics for  direct routes between top 50 airports.   I added code to interactively show the delay situation for flight routes departing from selected airport. It came my second major version: 
@@ -26,6 +36,7 @@ My Wife:
 2) What does the color means here?
 
 One of my colleague:
+
 1) I can see the airports distribution clearly and I can bigger circle means bigger airport.
 
 2) Does the color means the how good or bad the delay is in the airport?
@@ -36,6 +47,7 @@ One of my colleague:
 And I showed to one of my colleague, he liked overall, but he felt if the visual could have more user interaction to reveal more information like the flight route delay situation for each airport . 
 
 ###II. Feedback on version 2: 
+
 I posted version two to class forum. Teja, one of the coach kindly gave me lots of very good feedback:
 
 1) Are these the top 50 airports by air traffic?
@@ -56,7 +68,7 @@ Currently, this chart is exploratory rather than explanatory. It's exploratory b
 ###IV Feedback on version 4
 From one of my friends:
 
-I can see more green dots on West side and more orange and red dot on North and East part but it took me a while to figure it out.
+I can see more green dots on West side and more orange and red dot on North and East part but it took me a while to figure it out. I wish that I could have more leading clue.
 
 
 ## References:
