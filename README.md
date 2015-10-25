@@ -59,9 +59,8 @@ I posted version two to class forum. Teja, one of the coach kindly gave me lots 
 4) Do the colors for the airports represent the same information as the flight delay index? Also, this seems to be a continuous color scale rather than just having the 3 colors displayed in the legend?
 
 ###III Feedback on version 3
-From Teja
 
-I didn't see more feedback on the forum, so I submitted the project to see where I could improve.Got more feedback after first submission of this project to UDACITY review team:
+I submitted the project to see where I could improve.Got more feedback after first submission of this project to UDACITY review team:
 
 Currently, this chart is exploratory rather than explanatory. It's exploratory because the viewer is presented with all of the data, and the viewer can explore around and try to make conclusions about the data for himself. For this chart to be explanatory, you as chart maker need to tell a story about the data. You need to find something interesting and force the viewer to see what it was that you found interesting about the chart.
 
