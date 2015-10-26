@@ -21,7 +21,7 @@ Based on his feedback I created the third major version. I realized without a le
 
 From the feedback from Teja and Review team after my first submission. I realized that I headed the wrong direct in my design. I missed the story here. I went back to Teja's suggestion,  I digged back to the data, and found I could use my visual to reveal the relationship between airport flight delay situation and its geographic location. I found that most airports in the West region are greenish, and all the airport on in Northeast are reddish. Airports in South and Midwest are yellowish. So that can be the story that I can tell here. So I modify the map to divide US into 4 Census Bureau-designated regions to show this relationship in verion 4: http://tigerhead.github.io/flightdelayvisual/FlightDelayVisual_V4.html
 
-To lead the reader to find out that airports in West region has best delay situation and Northeast does the worst easier,  animation was created to show airports in each region from West to East. When readers move mouse on certain airport circle, fight delay statistics for the airport will pop up.  I removed the drawing  for flight routes since it didn't really help with story telling here and made the visual too busy.  Here comes version 5:
+To lead the reader to find out that airports in West region has best delay situation and Northeast does the worst easier,  animation was created to show airports in each region from West to East. When readers move mouse on certain airport circle, fight delay statistics for the airport will pop up.  I shifted some circles a little bit to ease over plotting issue in some area especially for northeast region. And I removed the drawing  for flight routes since it didn't really help with story telling here and made the visual too busy.  Here comes version 5:
 http://tigerhead.github.io/flightdelayvisual/FlightDelayVisual_V5.html
 
 ## Feedback 
@@ -68,6 +68,11 @@ Currently, this chart is exploratory rather than explanatory. It's exploratory b
 From one of my friends:
 
 I can see more green dots on West side and more orange and red dot on North and East part but it took me a while to figure it out. I wish that I could have more leading clue.
+
+From Charlie in the forum:
+
+There's a little over-plotting on the airports, which can make them difficult to distinguish.
+
 
 
 ## References:
