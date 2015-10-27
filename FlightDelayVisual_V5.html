@@ -20,7 +20,7 @@ h2 {
 
 h5 {
 	text-align: left;
-	color: black;
+	color: gray;
 	font-family: courier;
 }
 
@@ -120,13 +120,13 @@ line.link {
 		"use strict";
 		var margin = 50, width = 1100 , height = 650;
 
-		d3.select("body")
+	/*	d3.select("body")
 		  .append("h2")
-		  .text("50 Busiest Airports Flight Delay Year 2008");
+		  .text("50 Busiest Airports Geographic Distributio and Flight Delay");
 
 		d3.select("body")
 				.append("h5")
-				.text("This visual provides geographic distribution of 50 busiest US airports and reveal an insight between flight delay situation in the airports and their geographic location. Nearly half of top 50 airports are located in two coast line but the top 4 out 5 busiest airports are inland. Airports in northeast region has the  worst flight delay while airports in west region does the best, and airports in midwest and south region are in between corelated to their geographic locations. Additionally, reader can also explore flight delay statistics for each of those airport. As a notes here: delay index for each airport and flight route is calculated by a formula including following factors: 1)Number of flight delayed, 2)Arrival delay or departure delay, 3)Delayed time. The index was normalized to 1 to 10. 1 is the best and 10 is the worst.");
+				.text("This visual provides geographic distribution of 50 busiest US airports and reveal an insight between flight delay situation in the airports and their geographic location. Nearly half of top 50 airports are located in two coast line but the top 4 out 5 busiest airports are inland. Airports in northeast region has the  worst flight delay while airports in west region does the best, and airports in midwest and south region are in between corelated to their geographic locations. Additionally, reader can also explore flight delay statistics for each of those airport. As a notes here: delay index for each airport and flight route is calculated by a formula including following factors: 1)Number of flight delayed, 2)Arrival delay or departure delay, 3)Delayed time. The index was normalized to 1 to 10. 1 is the best and 10 is the worst."); */
 
 		var svg = d3.select("body")
 		            .append("svg")
@@ -292,11 +292,22 @@ line.link {
 			   .style("fill", "black")
 			   .attr("text-anchor", "left");
 
+
+			svg.append("text")
+			   .text("(1: the best and 10: the worst)")
+			   .attr("class",  "nodetext")
+			   .attr('x', lcx - 10)
+			   .attr('y', lcy + 95)
+			   .style("font-size", "10px")
+			   .style("font-family", "sans-serif")
+			   .style("fill", "black")
+			   .attr("text-anchor", "left");
+
 			 //Draw colors to represents the delay index numbers
 
 			svg.append("rect")
 			   .attr('x', lcx)
-			   .attr('y', lcy + 100)
+			   .attr('y', lcy + 110)
 			   .attr("width", 8)
 			   .attr("height", 5)
 			   .style('fill', color(1));
@@ -305,7 +316,24 @@ line.link {
 			   .text("1")
 			   .attr("class", "nodetext")
 			   .attr('x', lcx + 15)
-			   .attr('y', lcy + 105)
+			   .attr('y', lcy + 115)
+			   .style("font-size", "10px")
+			   .style("font-family", "sans-serif")
+			   .style("fill", "black")
+			   .attr("text-anchor", "left");
+
+			svg.append("rect")
+			   .attr('x', lcx)
+			   .attr('y', lcy + 125)
+			   .attr("width", 8)
+			   .attr("height", 5)
+			   .style('fill', color(2));
+
+			svg.append("text")
+			   .text("2")
+			   .attr("class", "nodetext")
+			   .attr('x', lcx + 15)
+			   .attr('y', lcy + 130)
 			   .style("font-size", "10px")
 			   .style("font-family", "sans-serif")
 			   .style("fill", "black")
@@ -314,7 +342,7 @@ line.link {
 
 			svg.append("rect")
 			   .attr('x', lcx)
-			   .attr('y', lcy + 115)
+			   .attr('y', lcy + 140)
 			   .attr("width", 8)
 			   .attr("height", 5)
 			   .style('fill', color(3));
@@ -323,7 +351,7 @@ line.link {
 			   .text("3")
 			   .attr("class", "nodetext")
 			   .attr('x', lcx + 15)
-			   .attr('y', lcy + 120)
+			   .attr('y', lcy + 145)
 			   .style("font-size", "10px")
 			   .style("font-family", "sans-serif")
 			   .style("fill", "black")
@@ -331,7 +359,42 @@ line.link {
 
 			svg.append("rect")
 			   .attr('x', lcx)
-			   .attr('y', lcy + 130)
+			   .attr('y', lcy + 155)
+			   .attr("width", 8)
+			   .attr("height", 5)
+			   .style('fill', color(4));
+
+			svg.append("text")
+			   .text("4")
+			   .attr("class", "nodetext")
+			   .attr('x', lcx + 15)
+			   .attr('y', lcy + 160)
+			   .style("font-size", "10px")
+			   .style("font-family", "sans-serif")
+			   .style("fill", "black")
+			   .attr("text-anchor", "left");
+
+			svg.append("rect")
+			   .attr('x', lcx)
+			   .attr('y', lcy + 170)
+			   .attr("width", 8)
+			   .attr("height", 5)
+			   .style('fill', color(5));
+
+			svg.append("text")
+			   .text("5")
+			   .attr("class", "nodetext")
+			   .attr('x', lcx + 15)
+			   .attr('y', lcy + 175)
+			   .style("font-size", "10px")
+			   .style("font-family", "sans-serif")
+			   .style("fill", "black")
+			   .attr("text-anchor", 	"left");
+
+
+			svg.append("rect")
+			   .attr('x', lcx)
+			   .attr('y', lcy + 185)
 			   .attr("width", 8)
 			   .attr("height", 5)
 			   .style('fill', color(6));
@@ -340,7 +403,7 @@ line.link {
 			   .text("6")
 			   .attr("class", "nodetext")
 			   .attr('x', lcx + 15)
-			   .attr('y', lcy + 135)
+			   .attr('y', lcy + 190)
 			   .style("font-size", "10px")
 			   .style("font-family", "sans-serif")
 			   .style("fill", "black")
@@ -348,7 +411,24 @@ line.link {
 
 			svg.append("rect")
 			   .attr('x', lcx)
-			   .attr('y', lcy + 145)
+			   .attr('y', lcy + 200)
+			   .attr("width", 8)
+			   .attr("height", 5)
+			   .style('fill', color(7));
+
+			svg.append("text")
+			   .text("7")
+			   .attr("class", "nodetext")
+			   .attr('x', lcx + 15)
+			   .attr('y', lcy + 205)
+			   .style("font-size", "10px")
+			   .style("font-family", "sans-serif")
+			   .style("fill", "black")
+			   .attr("text-anchor", "left");
+
+			svg.append("rect")
+			   .attr('x', lcx)
+			   .attr('y', lcy + 215)
 			   .attr("width", 8)
 			   .attr("height", 5)
 			   .style('fill', color(8));
@@ -357,7 +437,7 @@ line.link {
 			   .text("8")
 			   .attr("class", "nodetext")
 			   .attr('x', lcx + 15)
-			   .attr('y', lcy + 150)
+			   .attr('y', lcy + 220)
 			   .style("font-size", "10px")
 			   .style("font-family", "sans-serif")
 			   .style("fill", "black")
@@ -365,7 +445,24 @@ line.link {
 
 			svg.append("rect")
 			   .attr('x', lcx)
-			   .attr('y', lcy + 160)
+			   .attr('y', lcy + 230)
+			   .attr("width", 8)
+			   .attr("height", 5)
+			   .style('fill', color(9));
+
+			svg.append("text")
+			   .text("9")
+			   .attr("class", "nodetext")
+			   .attr('x', lcx + 15)
+			   .attr('y', lcy + 235)
+			   .style("font-size", "10px")
+			   .style("font-family", "sans-serif")
+			   .style("fill", "black")
+			   .attr("text-anchor", "left");
+
+			svg.append("rect")
+			   .attr('x', lcx)
+			   .attr('y', lcy + 245)
 			   .attr("width", 8)
 			   .attr("height", 5)
 			   .style('fill', color(10));
@@ -374,7 +471,7 @@ line.link {
 			   .text("10")
 			   .attr("class", "nodetext")
 			   .attr('x', lcx + 15)
-			   .attr('y', lcy + 165)
+			   .attr('y', lcy + 250)
 			   .style("font-size", "10px")
 			   .style("font-family", "sans-serif")
 			   .style("fill", "black")
@@ -820,6 +917,10 @@ line.link {
 </script>
 </head>
 <body>
+    <h2>50 Busiest Airports Geographic Distributio and Flight Delay, Year 2008</h2>
+  <p> This visual provides geographic distribution of 50 busiest US airports and reveal an insight between flight delay situation in the airports and their geographic location based 2008 data(<a href="http://stat-computing.org/dataexpo/2009/the-data.html">Data Source</a>). Airports in northeast region has the  worst flight delay while airports in west region does the best, and airports in midwest and south region are in between corelated to their geographic locations. Additionally, reader can also explore flight delay statistics for each of those airport. Nearly half of top 50 airports are located in two coast line but the top 4 out 5 busiest airports are inland. As a notes here: delay index for each airport and flight route is calculated by a formula including following factors: 1)Number of flight delayed, 2)Arrival delay or departure delay, 3)Delayed time. </p>
+
+
 	<script type="text/javascript">
 		/*
 		  Use D3 to load the TopJSON file
